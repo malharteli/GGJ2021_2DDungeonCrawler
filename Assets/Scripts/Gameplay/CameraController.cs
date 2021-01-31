@@ -12,7 +12,7 @@ namespace RPGM.Gameplay
     public class CameraController : MonoBehaviour
     {
         public Transform focus;
-        public float smoothTime = 2;
+        public float smoothTime = 0;
 
         Vector3 offset;
 

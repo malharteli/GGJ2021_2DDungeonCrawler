@@ -16,6 +16,7 @@ namespace RPGM.Gameplay
         public float acceleration = 2;
         public Vector3 nextMoveCommand;
         public Animator animator;
+        public CircleCollider2D attackCircle;
         public bool flipX = false;
 
         new Rigidbody2D rigidbody2D;
@@ -113,6 +114,7 @@ namespace RPGM.Gameplay
         void AttackState() 
         {
             rigidbody2D.velocity = Vector2.zero;
+            attackCircle.radius = 2f;
             UpdateAnimator(nextMoveCommand);
             StartCoroutine(attackHold());
         }
@@ -123,6 +125,7 @@ namespace RPGM.Gameplay
             attackBool = false;
             state = State.Idle;   
             UpdateAnimator(nextMoveCommand);
+            attackCircle.radius = 0.001f;
 
         }
 
@@ -223,6 +226,14 @@ namespace RPGM.Gameplay
             rigidbody2D = GetComponent<Rigidbody2D>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             pixelPerfectCamera = GameObject.FindObjectOfType<PixelPerfectCamera>();
+        }
+
+        void OnTriggerEnter2D(Collider2D other)
+        {
+            if (attackBool)
+            {
+                Debug.Log("Attack Activated");
+            }
         }
     }
 }

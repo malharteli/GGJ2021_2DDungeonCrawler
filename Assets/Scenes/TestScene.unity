@@ -821,7 +821,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886610612}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.0950971, y: 0.5227471, z: -1.5971769}
+  m_LocalPosition: {x: 0.56, y: 0.5227471, z: -1.5971769}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -905,9 +905,9 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 886610612}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: 45f19311d892d124cba670c9fb949ea8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -955,7 +955,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: e7917798169bd2d4ea9058a830c0057b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1688,9 +1688,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   model:
     player: {fileID: 886610614}
-    dialog: {fileID: 0}
+    dialog: {fileID: 835134027}
     input: {fileID: 1613539780}
-    inventoryController: {fileID: 0}
+    inventoryController: {fileID: 43037537}
     musicController: {fileID: 1613539776}
 --- !u!4 &1613539782
 Transform:

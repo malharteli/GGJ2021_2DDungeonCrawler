@@ -642,6 +642,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
+    Collab: 1
     UNet: 1
   luminIcon:
     m_Name: 
@@ -655,10 +656,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 
+  cloudProjectId: bc8e1141-2463-4ee7-84d8-3e56a1acd838
   framebufferDepthMemorylessMode: 0
-  projectName: 
-  organizationId: 
+  projectName: Raw 3D
+  organizationId: raptix1
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

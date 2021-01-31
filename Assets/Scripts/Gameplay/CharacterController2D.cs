@@ -22,7 +22,7 @@ namespace RPGM.Gameplay
         SpriteRenderer spriteRenderer;
         PixelPerfectCamera pixelPerfectCamera;
 
-        enum State
+        public enum State
         {
             Idle, Moving, Attack
         }
@@ -32,8 +32,9 @@ namespace RPGM.Gameplay
             North, East, West, South
         }
 
-        State state = State.Idle;
+        public State state = State.Idle;
         public Direction dir = Direction.North;
+        public bool attackBool = false;
         Vector3 start, end;
         Vector2 currentVelocity;
         float startTime;
@@ -56,7 +57,10 @@ namespace RPGM.Gameplay
 
         void IdleState()
         {
-            if (nextMoveCommand != Vector3.zero)
+            if (attackBool){
+                state = State.Attack;
+            }
+            else if (nextMoveCommand != Vector3.zero)
             {
                 start = transform.position;
                 end = start + nextMoveCommand;
@@ -66,17 +70,28 @@ namespace RPGM.Gameplay
                 nextMoveCommand = Vector3.zero;
                 state = State.Moving;
             }
+            else
+            {
+                velocity = 0;
+                rigidbody2D.velocity = Vector3.zero;
+                state = State.Idle;
+            }
         }
 
         void MoveState()
         {
-            velocity = Mathf.Clamp01(velocity + Time.deltaTime * acceleration);
-            rigidbody2D.velocity = Vector2.SmoothDamp(rigidbody2D.velocity, nextMoveCommand * speed, ref currentVelocity, acceleration, speed);
-            
+            if (attackBool)
+            {
+                state = State.Attack;
+            }
+            else
+            {
+                velocity = Mathf.Clamp01(velocity + Time.deltaTime * acceleration);
+                rigidbody2D.velocity = Vector2.SmoothDamp(rigidbody2D.velocity, nextMoveCommand * speed, ref currentVelocity, acceleration, speed);
+                
                 if (nextMoveCommand.y > 0){
                     dir = Direction.North;
                 }
-
                 else if (nextMoveCommand.y < 0){
                     dir = Direction.South;
                     }
@@ -86,7 +101,29 @@ namespace RPGM.Gameplay
                 else if (nextMoveCommand.x < 0){
                     dir = Direction.West;
                     }
+                else{
+                    dir = dir;
+                    state = State.Idle;
+                }
+
+                UpdateAnimator(nextMoveCommand);
+            }
+        }
+
+        void AttackState() 
+        {
+            rigidbody2D.velocity = Vector2.zero;
             UpdateAnimator(nextMoveCommand);
+            StartCoroutine(attackHold());
+        }
+
+        IEnumerator attackHold()
+        {
+            yield return new WaitForSecondsRealtime(0.5f);
+            attackBool = false;
+            state = State.Idle;   
+            UpdateAnimator(nextMoveCommand);
+
         }
 
         void UpdateAnimator(Vector3 direction)
@@ -100,11 +137,11 @@ namespace RPGM.Gameplay
                         {
                             animator.PlayInFixedTime(IDLE_N);
                         }
-                        if (state == State.Moving)
+                        else if (state == State.Moving)
                         {
                             animator.PlayInFixedTime(WALK_N);
                         }
-                        if (state == State.Attack)
+                        else if (state == State.Attack)
                         {
                             animator.PlayInFixedTime(ATTACK_N);
                         }
@@ -113,12 +150,13 @@ namespace RPGM.Gameplay
                         if (state == State.Idle)
                         {
                             animator.PlayInFixedTime(IDLE_S);
+                            break;
                         }
-                        if (state == State.Moving)
+                        else if (state == State.Moving)
                         {
                             animator.PlayInFixedTime(WALK_S);
                         }
-                        if (state == State.Attack)
+                        else if (state == State.Attack)
                         {
                             animator.PlayInFixedTime(ATTACK_S);
                         }
@@ -128,11 +166,11 @@ namespace RPGM.Gameplay
                         {
                             animator.PlayInFixedTime(IDLE_E);
                         }
-                        if (state == State.Moving)
+                        else if (state == State.Moving)
                         {
                             animator.PlayInFixedTime(WALK_E);
                         }
-                        if (state == State.Attack)
+                        else if (state == State.Attack)
                         {
                             animator.PlayInFixedTime(ATTACK_E);
                         }
@@ -142,11 +180,11 @@ namespace RPGM.Gameplay
                         {
                             animator.PlayInFixedTime(IDLE_W);
                         }
-                        if (state == State.Moving)
+                        else if (state == State.Moving)
                         {
                             animator.PlayInFixedTime(WALK_W);
                         }
-                        if (state == State.Attack)
+                        else if (state == State.Attack)
                         {
                             animator.PlayInFixedTime(ATTACK_W);
                         }
@@ -155,7 +193,7 @@ namespace RPGM.Gameplay
                 }
             }
         }
-
+        
         void Update()
         {
             switch (state)
@@ -165,6 +203,9 @@ namespace RPGM.Gameplay
                     break;
                 case State.Moving:
                     MoveState();
+                    break;
+                case State.Attack:
+                    AttackState();
                     break;
             }
         }

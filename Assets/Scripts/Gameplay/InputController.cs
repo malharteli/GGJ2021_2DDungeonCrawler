@@ -48,10 +48,14 @@ namespace RPGM.UI
 
         void CharacterControl()
         {
-            float horizontalAxis = Input.GetAxis("Horizontal");
-            float verticalAxis = Input.GetAxis("Vertical");
+            float horizontalAxis = Mathf.Clamp(Input.GetAxis("Horizontal"), -1, 1);
+            float verticalAxis = Mathf.Clamp(Input.GetAxis("Vertical"), -1, 1);
             Vector3 movementCommand = new Vector3(horizontalAxis*stepSize, verticalAxis*stepSize, 0);
             model.player.nextMoveCommand = movementCommand;
+            if (Input.GetButtonDown("Fire1"))
+            {
+                model.player.attackBool = true;
+            }
         }
     }
 }

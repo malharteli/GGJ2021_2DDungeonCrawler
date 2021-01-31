@@ -33,6 +33,9 @@ namespace RPGM.UI
                 case State.DialogControl:
                     DialogControl();
                     break;
+                case null:
+                    Debug.Log("Why?");
+                    break;
             }
         }
 

@@ -806,6 +806,7 @@ GameObject:
   - component: {fileID: 886610616}
   - component: {fileID: 886610615}
   - component: {fileID: 886610614}
+  - component: {fileID: 886610620}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -907,7 +908,7 @@ Animator:
   m_GameObject: {fileID: 886610612}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: 45f19311d892d124cba670c9fb949ea8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2057bcea9f91da64ca0cfaba31cfb2e0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -966,6 +967,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 2
   m_SpriteSortPoint: 1
+--- !u!114 &886610620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 886610612}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07cf852527baa3043a37b68920e719eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1111085892
 GameObject:
   m_ObjectHideFlags: 0
@@ -6445,7 +6458,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1443462084
 Transform:
   m_ObjectHideFlags: 0
@@ -6556,7 +6569,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 1.5608284
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0

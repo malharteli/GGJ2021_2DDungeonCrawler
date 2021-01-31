@@ -24,15 +24,35 @@ namespace RPGM.Gameplay
 
         enum State
         {
-            Idle, Moving
+            Idle, Moving, Attack
+        }
+
+        public enum Direction
+        {
+            North, East, West, South
         }
 
         State state = State.Idle;
+        public Direction dir = Direction.North;
         Vector3 start, end;
         Vector2 currentVelocity;
         float startTime;
         float distance;
         float velocity;
+
+        const string IDLE_S = "Idle-D";
+        const string IDLE_N = "Idle-U";
+        const string IDLE_E = "Idle-R";
+        const string IDLE_W = "Idle-L";
+        const string WALK_N = "Walk-U";
+        const string WALK_S = "Walk-D";
+        const string WALK_E = "Walk-R";
+        const string WALK_W = "Walk-L";
+        const string ATTACK_N = "Attack-U";
+        const string ATTACK_S = "Attack-D";
+        const string ATTACK_E = "Attack-R";
+        const string ATTACK_W = "Attack-L";
+
 
         void IdleState()
         {
@@ -51,17 +71,88 @@ namespace RPGM.Gameplay
         void MoveState()
         {
             velocity = Mathf.Clamp01(velocity + Time.deltaTime * acceleration);
-            UpdateAnimator(nextMoveCommand);
             rigidbody2D.velocity = Vector2.SmoothDamp(rigidbody2D.velocity, nextMoveCommand * speed, ref currentVelocity, acceleration, speed);
-            spriteRenderer.flipX = rigidbody2D.velocity.x >= 0 ? false : false;
+            
+                if (nextMoveCommand.y > 0){
+                    dir = Direction.North;
+                }
+
+                else if (nextMoveCommand.y < 0){
+                    dir = Direction.South;
+                    }
+                else if (nextMoveCommand.x > 0){
+                    dir = Direction.East;
+                    }
+                else if (nextMoveCommand.x < 0){
+                    dir = Direction.West;
+                    }
+            UpdateAnimator(nextMoveCommand);
         }
 
         void UpdateAnimator(Vector3 direction)
         {
             if (animator)
             {
-                animator.SetInteger("WalkX", direction.x < 0 ? -1 : direction.x > 0 ? 1 : 0);
-                animator.SetInteger("WalkY", direction.y < 0 ? 1 : direction.y > 0 ? -1 : 0);
+                switch(dir)
+                {
+                    case Direction.North:
+                        if (state == State.Idle)
+                        {
+                            animator.PlayInFixedTime(IDLE_N);
+                        }
+                        if (state == State.Moving)
+                        {
+                            animator.PlayInFixedTime(WALK_N);
+                        }
+                        if (state == State.Attack)
+                        {
+                            animator.PlayInFixedTime(ATTACK_N);
+                        }
+                        break;
+                    case Direction.South:
+                        if (state == State.Idle)
+                        {
+                            animator.PlayInFixedTime(IDLE_S);
+                        }
+                        if (state == State.Moving)
+                        {
+                            animator.PlayInFixedTime(WALK_S);
+                        }
+                        if (state == State.Attack)
+                        {
+                            animator.PlayInFixedTime(ATTACK_S);
+                        }
+                        break;
+                    case Direction.East:
+                        if (state == State.Idle)
+                        {
+                            animator.PlayInFixedTime(IDLE_E);
+                        }
+                        if (state == State.Moving)
+                        {
+                            animator.PlayInFixedTime(WALK_E);
+                        }
+                        if (state == State.Attack)
+                        {
+                            animator.PlayInFixedTime(ATTACK_E);
+                        }
+                        break;
+                    case Direction.West:
+                        if (state == State.Idle)
+                        {
+                            animator.PlayInFixedTime(IDLE_W);
+                        }
+                        if (state == State.Moving)
+                        {
+                            animator.PlayInFixedTime(WALK_W);
+                        }
+                        if (state == State.Attack)
+                        {
+                            animator.PlayInFixedTime(ATTACK_W);
+                        }
+                        break;
+
+                }
             }
         }
 
